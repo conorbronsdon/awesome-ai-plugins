@@ -404,9 +404,10 @@ def malformed_community_plugin_lines(
 ) -> list[str]:
     """Return new Community Plugins bullets that do not match the catalog format.
 
-    Exact lines already present in the base README may appear as additions when
-    an existing entry is reordered. They are not new submissions and should not
-    be rejected for using a legacy or repository-local URL format.
+    Exact lines already present in the base Community Plugins section may appear
+    as additions when an existing entry is reordered. They are not new
+    submissions and should not be rejected for using a legacy or
+    repository-local URL format.
     """
 
     if not diff:
