@@ -151,6 +151,35 @@ class ValidateContributionTests(unittest.TestCase):
 
         self.assertEqual(malformed, [changed_entry])
 
+    def test_duplicate_existing_local_entry_is_still_malformed(self) -> None:
+        local_entry = "- [Local Plugin](./plugins/local) - bundled plugin"
+        base = f"## Community Plugins\n{local_entry}\n"
+        head = f"## Community Plugins\n{local_entry}\n{local_entry}\n"
+        diff = (
+            "@@ -1,2 +1,3 @@\n"
+            " ## Community Plugins\n"
+            f" {local_entry}\n"
+            f"+{local_entry}\n"
+        )
+
+        malformed = MODULE.malformed_community_plugin_lines(diff, base, head)
+
+        self.assertEqual(malformed, [local_entry])
+
+    def test_new_local_entry_is_malformed(self) -> None:
+        local_entry = "- [Local Plugin](./plugins/local) - bundled plugin"
+        base = "## Community Plugins\n"
+        head = f"## Community Plugins\n{local_entry}\n"
+        diff = (
+            "@@ -1,1 +1,2 @@\n"
+            " ## Community Plugins\n"
+            f"+{local_entry}\n"
+        )
+
+        malformed = MODULE.malformed_community_plugin_lines(diff, base, head)
+
+        self.assertEqual(malformed, [local_entry])
+
     def test_relocated_entry_is_detected_when_base_url_only_exists_in_contents(self) -> None:
         base = (
             "## Contents\n"

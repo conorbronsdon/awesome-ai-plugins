@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+from collections import Counter
 import difflib
 import json
 import os
@@ -411,13 +412,19 @@ def malformed_community_plugin_lines(
     if not diff:
         return []
     base_lines = base_readme.splitlines()
-    existing_community_lines = {
+    base_community_lines = Counter(
         line.strip()
         for number, line in enumerate(base_lines, start=1)
         if current_readme_section(base_lines, number) == "Community Plugins"
         and line.strip().startswith("- [")
-    }
+    )
     readme_lines = head_readme.splitlines()
+    head_community_lines = Counter(
+        line.strip()
+        for number, line in enumerate(readme_lines, start=1)
+        if current_readme_section(readme_lines, number) == "Community Plugins"
+        and line.strip().startswith("- [")
+    )
     malformed: list[str] = []
     added_line_number = 0
     for line in diff.splitlines():
@@ -430,7 +437,7 @@ def malformed_community_plugin_lines(
             if (
                 current_readme_section(readme_lines, added_line_number) == "Community Plugins"
                 and content.startswith("- [")
-                and content not in existing_community_lines
+                and head_community_lines[content] > base_community_lines[content]
                 and README_ENTRY_RE.match(content) is None
             ):
                 malformed.append(content)
