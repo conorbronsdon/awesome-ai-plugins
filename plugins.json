@@ -3,7 +3,7 @@
   "name": "awesome-ai-plugins",
   "version": "1.0.0",
   "last_updated": "2026-09-08",
-  "total": 349,
+  "total": 350,
   "platforms": [
     "codex",
     "grok",
@@ -3467,6 +3467,20 @@
       "platform": "codex",
       "source": "awesome-ai-plugins",
       "install_url": "https://raw.githubusercontent.com/hieuphung97/dely/HEAD/.codex-plugin/plugin.json",
+      "ecosystems": [
+        "codex"
+      ]
+    },
+    {
+      "name": "Demo GIF",
+      "url": "https://github.com/conorbronsdon/demo-gif-skill",
+      "owner": "conorbronsdon",
+      "repo": "demo-gif-skill",
+      "description": "Agent Skill that scripts, renders, optimizes, and embeds reproducible demo GIFs for CLI, TUI, web, and library projects using VHS or Playwright plus ffmpeg",
+      "category": "Development & Workflow",
+      "platform": "codex",
+      "source": "awesome-ai-plugins",
+      "install_url": "https://raw.githubusercontent.com/conorbronsdon/demo-gif-skill/HEAD/.codex-plugin/plugin.json",
       "ecosystems": [
         "codex"
       ]
